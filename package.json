@@ -1,0 +1,35 @@
+{
+  "name": "ip",
+  "version": "0.1.0",
+  "description": "Easily get comprehensive information about public IP addresses",
+  "keywords": [
+    "ip",
+    "geolocation",
+    "asn",
+    "firewall",
+    "analytics",
+    "ipv4",
+    "ipv6",
+    "traffic",
+    "intelligence",
+    "ip",
+    "address",
+    "localization",
+    "network"
+  ],
+  "homepage": "https://github.com/publicipaddress/client-ts#readme",
+  "bugs": {
+    "url": "https://github.com/publicipaddress/client-ts/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/publicipaddress/client-ts.git"
+  },
+  "license": "ISC",
+  "author": "Yousef",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "test": "npm run test"
+  }
+}
