@@ -28,8 +28,14 @@
   "license": "ISC",
   "author": "Yousef",
   "type": "module",
-  "main": "index.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
+    "build": "tsc",
+    "prepare": "npm run build",
     "test": "npm run test"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
   }
 }
