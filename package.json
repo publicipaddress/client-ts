@@ -1,41 +1,32 @@
 {
-  "name": "ip",
-  "version": "0.1.0",
-  "description": "Easily get comprehensive information about public IP addresses",
-  "keywords": [
-    "ip",
-    "geolocation",
-    "asn",
-    "firewall",
-    "analytics",
-    "ipv4",
-    "ipv6",
-    "traffic",
-    "intelligence",
-    "ip",
-    "address",
-    "localization",
-    "network"
-  ],
-  "homepage": "https://github.com/publicipaddress/client-ts#readme",
-  "bugs": {
-    "url": "https://github.com/publicipaddress/client-ts/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/publicipaddress/client-ts.git"
-  },
-  "license": "ISC",
-  "author": "Yousef",
-  "type": "module",
+  "name": "publicipaddress",
+  "version": "1.0.0",
+  "description": "A TypeScript client to get comprehensive information about IP addresses.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "prepare": "npm run build",
-    "test": "npm run test"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [
+    "ip",
+    "geolocation",
+    "network",
+    "weather",
+    "public-ip",
+    "ip-lookup",
+    "api-client",
+    "typescript",
+    "ip-address",
+    "ip-info",
+    "geo",
+    "rest-api",
+    "internet"
+  ],
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
-    "typescript": "^6.0.3"
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
   }
 }
