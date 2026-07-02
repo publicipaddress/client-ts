@@ -1,32 +1,4 @@
-export interface IPClientConfig {
-  apiKey: string;
-  apiVersion?: number;
-  timeout?: number;
-}
-
-export interface Geolocation {
-  city?: string;
-  region?: string;
-  country?: string;
-  country_code?: string;
-  latitude?: number;
-  longitude?: number;
-  timezone?: string;
-  zip_code?: string;
-}
-
-export interface NetworkInfo {
-  ip?: string;
-  as_number?: string;
-  organization?: string;
-  version?: string;
-}
-
-export interface WeatherInfo {
-  latitude?: number;
-  longitude?: number;
-  weather?: Record<string, unknown>;
-}
+import type { IPClientConfig, Geolocation, NetworkInfo, WeatherInfo } from "./types";
 
 export class IPClient {
   private readonly apiKey: string;
