@@ -1,15 +1,42 @@
-interface ClientConfig {
-  apiKey?: string;
+export interface IPClientConfig {
+  apiKey: string;
   apiVersion?: number;
+  timeout?: number;
 }
 
-class PublicIPAddressInfo {
-  private apiKey?: string;
-  private apiVersion: number = 1;
+export interface Geolocation {
+  city?: string;
+  region?: string;
+  country?: string;
+  country_code?: string;
+  latitude?: number;
+  longitude?: number;
+  timezone?: string;
+  zip_code?: string;
+}
 
-  configure(config: ClientConfig): void {
-    if (config.apiKey) this.apiKey = config.apiKey;
-    if (config.apiVersion) this.apiVersion = config.apiVersion;
+export interface NetworkInfo {
+  ip?: string;
+  as_number?: string;
+  organization?: string;
+  version?: string;
+}
+
+export interface WeatherInfo {
+  latitude?: number;
+  longitude?: number;
+  weather?: Record<string, unknown>;
+}
+
+export class IPClient {
+  private readonly apiKey: string;
+  private readonly apiVersion: number;
+  private readonly timeout: number;
+
+  constructor(config: IPClientConfig) {
+    this.apiKey = config.apiKey;
+    this.apiVersion = config.apiVersion ?? 1;
+    this.timeout = config.timeout ?? 10000;
   }
 
   private getBaseUrl(): string {
@@ -20,27 +47,48 @@ class PublicIPAddressInfo {
     const url = `${this.getBaseUrl()}${endpoint}`;
     const headers: HeadersInit = {};
     if (this.apiKey) {
-      headers['Authorization'] = `Bearer ${this.apiKey}`;
+      headers.Authorization = `Bearer ${this.apiKey}`;
     }
 
-    const response = await fetch(url, { headers });
-    if (!response.ok) {
-      throw new Error(`API request failed: ${response.statusText}`);
+    const controller = new AbortController();
+    const timeoutId =
+      this.timeout > 0
+        ? globalThis.setTimeout(() => controller.abort(), this.timeout)
+        : undefined;
+
+    try {
+      const response = await fetch(url, {
+        headers,
+        signal: controller.signal,
+      });
+
+      if (!response.ok) {
+        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+      }
+
+      return (await response.json()) as T;
+    } catch (error) {
+      if (error instanceof Error && error.name === 'AbortError') {
+        throw new Error(`API request timed out after ${this.timeout}ms`);
+      }
+
+      throw error;
+    } finally {
+      if (timeoutId !== undefined) {
+        clearTimeout(timeoutId);
+      }
     }
-    return response.json();
   }
 
-  async getGeolocation(ip: string) {
-    return this.request<any>(`/geolocation/ips/${ip}`);
+  async getGeolocation(ip: string): Promise<Geolocation> {
+    return this.request<Geolocation>(`/geolocation/ips/${ip}`);
   }
 
-  async getNetwork(ip: string) {
-    return this.request<any>(`/network/ips/${ip}`);
+  async getNetwork(ip: string): Promise<NetworkInfo> {
+    return this.request<NetworkInfo>(`/network/ips/${ip}`);
   }
 
-  async getWeather(ip: string) {
-    return this.request<any>(`/weather/ips/${ip}`);
+  async getWeather(ip: string): Promise<WeatherInfo> {
+    return this.request<WeatherInfo>(`/weather/ips/${ip}`);
   }
 }
-
-export const client = new PublicIPAddressInfo();

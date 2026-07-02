@@ -1,1 +1,7 @@
-export { client } from "./client";
+export { IPClient } from "./client";
+export type {
+	Geolocation,
+	IPClientConfig,
+	NetworkInfo,
+	WeatherInfo,
+} from "./client";

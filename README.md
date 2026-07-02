@@ -13,27 +13,26 @@ npm install publicipaddress
 Get started in seconds to look up IP information.
 
 ```typescript
-import { client } from "publicipaddress";
+import { IPClient, type IPClientConfig } from "publicipaddress";
 
-// Configure your API key (if needed)
-client.configure({
-  apiKey: "YOUR_API_KEY", // Optional: required for advanced/rate-limited features
-  apiVersion: 1           // Optional: defaults to 1 (uses 'v1' in requests)
-});
+const config: IPClientConfig = {
+  apiKey: "YOUR_API_KEY",
+  apiVersion: 1,
+  timeout: 10000,
+};
+
+const ipService = new IPClient(config);
 
 async function run() {
   try {
-    // Get geolocation data for an IP
-    const geo = await client.getGeolocation("8.8.8.8");
+    const geo = await ipService.getGeolocation("8.8.8.8");
     console.log("Country:", geo.country);
 
-    // Get network data for an IP
-    const net = await client.getNetwork("8.8.8.8");
+    const net = await ipService.getNetwork("8.8.8.8");
     console.log("ASN:", net.as_number);
 
-    // Get weather data for an IP
-    const weather = await client.getWeather("8.8.8.8");
-    console.log("Weather:", weather.weather.current);
+    const weather = await ipService.getWeather("8.8.8.8");
+    console.log("Weather:", weather.weather?.current);
   } catch (error) {
     console.error("Error fetching IP info:", error);
   }
@@ -81,6 +80,7 @@ Returns an object containing:
 
 | Method | Purpose |
 | :--- | :--- |
-| `client.getGeolocation(ip)` | Geolocation lookups |
-| `client.getNetwork(ip)` | Network/AS lookups |
-| `client.getWeather(ip)` | Weather conditions for an IP location |
+| `new IPClient(config)` | Create a client with fixed API settings |
+| `ipService.getGeolocation(ip)` | Geolocation lookups |
+| `ipService.getNetwork(ip)` | Network/AS lookups |
+| `ipService.getWeather(ip)` | Weather conditions for an IP location |
