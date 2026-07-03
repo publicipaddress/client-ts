@@ -1,7 +1,7 @@
-export { IPClient } from "./client";
+export { PublicIPAddressInfo } from "./client";
 export type {
     Geolocation,
-    IPClientConfig,
+    PublicIPAddressInfoConfig,
     NetworkInfo,
     WeatherInfo,
 } from "./types";

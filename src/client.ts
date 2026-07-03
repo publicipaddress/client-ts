@@ -1,11 +1,11 @@
-import type { IPClientConfig, Geolocation, NetworkInfo, WeatherInfo } from "./types";
+import type { PublicIPAddressInfoConfig, Geolocation, NetworkInfo, WeatherInfo } from "./types";
 
-export class IPClient {
+export class PublicIPAddressInfo {
   private readonly apiKey: string;
   private readonly apiVersion: number;
   private readonly timeout: number;
 
-  constructor(config: IPClientConfig) {
+  constructor(config: PublicIPAddressInfoConfig) {
     this.apiKey = config.apiKey;
     this.apiVersion = config.apiVersion ?? 1;
     this.timeout = config.timeout ?? 10000;

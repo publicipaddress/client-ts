@@ -13,15 +13,15 @@ npm install publicipaddress
 Get started in seconds to look up IP information.
 
 ```typescript
-import { IPClient, type IPClientConfig } from "publicipaddress";
+import { PublicIPAddressInfo, type PublicIPAddressInfoConfig } from "publicipaddress";
 
-const config: IPClientConfig = {
+const config: PublicIPAddressInfoConfig = {
   apiKey: "YOUR_API_KEY",
   apiVersion: 1,
   timeout: 10000,
 };
 
-const ipService = new IPClient(config);
+const ipService = new PublicIPAddressInfo(config);
 
 async function run() {
   try {
@@ -80,7 +80,7 @@ Returns an object containing:
 
 | Method | Purpose |
 | :--- | :--- |
-| `new IPClient(config)` | Create a client with fixed API settings |
+| `new PublicIPAddressInfo(config)` | Create a client with fixed API settings |
 | `ipService.getGeolocation(ip)` | Geolocation lookups |
 | `ipService.getNetwork(ip)` | Network/AS lookups |
 | `ipService.getWeather(ip)` | Weather conditions for an IP location |

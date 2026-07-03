@@ -1,1 +1,1 @@
-export type { IPClientConfig } from "./client";
+export type { PublicIPAddressInfoConfig } from "./client";
