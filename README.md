@@ -21,17 +21,17 @@ const config: PublicIPAddressInfoConfig = {
   timeout: 10000,
 };
 
-const ipService = new PublicIPAddressInfo(config);
+const ipInfo = new PublicIPAddressInfo(config);
 
 async function run() {
   try {
-    const geo = await ipService.getGeolocation("8.8.8.8");
+    const geo = await ipInfo.getGeolocation("8.8.8.8");
     console.log("Country:", geo.country);
 
-    const net = await ipService.getNetwork("8.8.8.8");
+    const net = await ipInfo.getNetwork("8.8.8.8");
     console.log("ASN:", net.as_number);
 
-    const weather = await ipService.getWeather("8.8.8.8");
+    const weather = await ipInfo.getWeather("8.8.8.8");
     console.log("Weather:", weather.weather?.current);
   } catch (error) {
     console.error("Error fetching IP info:", error);
@@ -81,6 +81,6 @@ Returns an object containing:
 | Method | Purpose |
 | :--- | :--- |
 | `new PublicIPAddressInfo(config)` | Create a client with fixed API settings |
-| `ipService.getGeolocation(ip)` | Geolocation lookups |
-| `ipService.getNetwork(ip)` | Network/AS lookups |
-| `ipService.getWeather(ip)` | Weather conditions for an IP location |
+| `ipInfo.getGeolocation(ip)` | Geolocation lookups |
+| `ipInfo.getNetwork(ip)` | Network/AS lookups |
+| `ipInfo.getWeather(ip)` | Weather conditions for an IP location |
