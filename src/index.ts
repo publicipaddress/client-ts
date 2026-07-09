@@ -7,6 +7,6 @@ export type {
     RequestFunction,
     BuildQueryFunction,
 } from "./types";
-export type { GeolocationResponse as Geolocation } from "./geolocation/types";
-export type { NetworkResponse as NetworkInfo } from "./network/types";
-export type { WeatherResponse as WeatherInfo } from "./weather/types";
+export type { GeolocationResponse } from "./geolocation/types";
+export type { NetworkResponse } from "./network/types";
+export type { WeatherResponse } from "./weather/types";
