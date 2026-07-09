@@ -4,3 +4,8 @@ export interface NetworkResponse {
     organization?: string;
     version?: string;
 }
+
+export interface NetworkAutonomousSystemResponse {
+    number?: string;
+    organization?: string;
+}

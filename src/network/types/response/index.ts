@@ -1,2 +1,2 @@
 export type { NetworkResponse } from "./network";
-export type { NetworkAutonomousSystemResponse } from "./response";
+export type { NetworkAutonomousSystemResponse } from "./network";
