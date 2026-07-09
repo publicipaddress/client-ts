@@ -1,2 +1,9 @@
 export type { PublicIPAddressInfoConfig } from "./config";
-export type { Geolocation, NetworkInfo, WeatherInfo } from "./responses";
+export type {
+    Geolocation,
+    NetworkInfo,
+    WeatherInfo,
+    CountryLookup,
+    CityLookup,
+    AutonomousSystemLookup,
+} from "./responses";

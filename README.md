@@ -44,7 +44,7 @@ run();
 ## Supported Data Properties
 
 ### `getGeolocation(ip)`
-Returns an object containing:
+Returns a merged geolocation object built from the `/geolocation` endpoints. It contains:
 - `city` (string): Name of the city.
 - `region` (string): Name of the state/region.
 - `country` (string): Name of the country.
@@ -52,17 +52,17 @@ Returns an object containing:
 - `latitude` (number): Latitude coordinate.
 - `longitude` (number): Longitude coordinate.
 - `timezone` (string): Timezone name.
-- `zip_code` (string): Postal code.
+- `zip_code` (string): Postal code when available from the lookup endpoints.
 
 ### `getNetwork(ip)`
-Returns an object containing:
+Returns an object built from `/network` containing:
 - `ip` (string): The requested IP address.
 - `as_number` (string): The Autonomous System Number (ASN).
 - `organization` (string): The network organization name.
-- `version` (string): IP version (e.g., IPv4).
+- `version` (string): IP version when available.
 
 ### `getWeather(ip)`
-Returns an object containing:
+Returns an object from `/weather/current` containing:
 - `latitude` (number): Latitude coordinate.
 - `longitude` (number): Longitude coordinate.
 - `weather` (object): Detailed weather data including:

@@ -1,4 +1,12 @@
-import type { PublicIPAddressInfoConfig, Geolocation, NetworkInfo, WeatherInfo } from "./types";
+import type {
+  PublicIPAddressInfoConfig,
+  Geolocation,
+  NetworkInfo,
+  WeatherInfo,
+  CountryLookup,
+  CityLookup,
+  AutonomousSystemLookup,
+} from "./types";
 
 export class PublicIPAddressInfo {
   private readonly apiKey: string;
@@ -52,15 +60,53 @@ export class PublicIPAddressInfo {
     }
   }
 
+  private buildQuery(endpoint: string, params: Record<string, string | number | undefined>): string {
+    const searchParams = new URLSearchParams();
+
+    for (const [key, value] of Object.entries(params)) {
+      if (value !== undefined) {
+        searchParams.set(key, String(value));
+      }
+    }
+
+    const query = searchParams.toString();
+    return query.length > 0 ? `${endpoint}?${query}` : endpoint;
+  }
+
   async getGeolocation(ip: string): Promise<Geolocation> {
-    return this.request<Geolocation>(`/geolocation/ips/${ip}`);
+    const [countries, cities] = await Promise.all([
+      this.request<CountryLookup[]>(this.buildQuery("/geolocation/countries", { ip, limit: 1 })),
+      this.request<CityLookup[]>(this.buildQuery("/geolocation/cities", { ip, limit: 1 })),
+    ]);
+
+    const country = countries[0];
+    const city = cities[0];
+
+    return {
+      city: city?.name,
+      region: country?.region ?? city?.state_code,
+      country: country?.name,
+      country_code: country?.iso2 ?? city?.country_code,
+      latitude: city?.latitude ?? country?.latitude,
+      longitude: city?.longitude ?? country?.longitude,
+      timezone: country?.timezones?.[0]?.zoneName,
+    };
   }
 
   async getNetwork(ip: string): Promise<NetworkInfo> {
-    return this.request<NetworkInfo>(`/network/ips/${ip}`);
+    const autonomousSystems = await this.request<AutonomousSystemLookup[]>(
+      this.buildQuery("/network/autonomous-systems", { ip, limit: 1 }),
+    );
+    const autonomousSystem = autonomousSystems[0];
+
+    return {
+      ip,
+      as_number: autonomousSystem?.number,
+      organization: autonomousSystem?.organization,
+    };
   }
 
   async getWeather(ip: string): Promise<WeatherInfo> {
-    return this.request<WeatherInfo>(`/weather/ips/${ip}`);
+    return this.request<WeatherInfo>(this.buildQuery("/weather/current", { ip }));
   }
 }
