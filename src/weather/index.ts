@@ -6,5 +6,11 @@ export async function getWeather(
     buildQuery: BuildQueryFunction,
     input: WeatherRequest,
 ): Promise<WeatherResponse> {
-    return request<WeatherResponse>(buildQuery("/weather/current", { ip: input.ip }));
+    const response = await request<WeatherResponse>(buildQuery("/weather/current", { ip: input.ip }));
+
+    return {
+        latitude: response.latitude ?? null,
+        longitude: response.longitude ?? null,
+        weather: response.weather ?? null,
+    };
 }

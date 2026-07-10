@@ -20,12 +20,12 @@ export async function getGeolocation(
     const city = cities[0];
 
     return {
-        city: city?.name,
-        region: country?.region ?? city?.state_code,
-        country: country?.name,
-        country_code: country?.iso2 ?? city?.country_code,
-        latitude: city?.latitude ?? country?.latitude,
-        longitude: city?.longitude ?? country?.longitude,
-        timezone: country?.timezones?.[0]?.zoneName,
+        city: city?.name ?? null,
+        region: country?.region ?? null,
+        country: country?.name ?? null,
+        country_code: country?.iso2 ?? null,
+        latitude: city?.latitude ?? null,
+        longitude: city?.longitude ?? null,
+        timezone: country?.timezones?.[0]?.zoneName ?? null,
     };
 }

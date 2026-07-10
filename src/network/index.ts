@@ -16,8 +16,9 @@ export async function getNetwork(
     const autonomousSystem = autonomousSystems[0];
 
     return {
-        ip: input.ip,
-        as_number: autonomousSystem?.number,
-        organization: autonomousSystem?.organization,
+        ip: input.ip ?? null,
+        as_number: autonomousSystem?.number ?? null,
+        organization: autonomousSystem?.organization ?? null,
+        version: null,
     };
 }

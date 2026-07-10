@@ -1,12 +1,12 @@
 export interface GeolocationResponse {
-    city?: string;
-    region?: string;
-    country?: string;
-    country_code?: string;
-    latitude?: number;
-    longitude?: number;
-    timezone?: string;
-    zip_code?: string;
+    city: string | null;
+    region: string | null;
+    country: string | null;
+    country_code: string | null;
+    latitude: number | null;
+    longitude: number | null;
+    timezone: string | null;
+    zip_code?: string | null;
 }
 
 export interface GeolocationCountryResponse {

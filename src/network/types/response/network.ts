@@ -1,8 +1,8 @@
 export interface NetworkResponse {
-    ip?: string;
-    as_number?: string;
-    organization?: string;
-    version?: string;
+    ip: string | null;
+    as_number: string | null;
+    organization: string | null;
+    version: string | null;
 }
 
 export interface NetworkAutonomousSystemResponse {
