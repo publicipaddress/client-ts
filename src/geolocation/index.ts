@@ -1,7 +1,7 @@
 import type { BuildQueryFunction, RequestFunction } from "../types";
 import type {
     GeolocationRequest,
-    GeolocationResponse,
+    GeolocationLocationResponse,
     GeolocationCountryResponse,
     GeolocationCityResponse,
 } from "./types";
@@ -10,7 +10,7 @@ export async function getGeolocation(
     request: RequestFunction,
     buildQuery: BuildQueryFunction,
     input: GeolocationRequest,
-): Promise<GeolocationResponse> {
+): Promise<GeolocationLocationResponse> {
     const [countries, cities] = await Promise.all([
         request<GeolocationCountryResponse[]>(buildQuery("/geolocation/countries", { ip: input.ip, limit: 1 })),
         request<GeolocationCityResponse[]>(buildQuery("/geolocation/cities", { ip: input.ip, limit: 1 })),
@@ -27,5 +27,6 @@ export async function getGeolocation(
         latitude: city?.latitude ?? null,
         longitude: city?.longitude ?? null,
         timezone: country?.timezones?.[0]?.zoneName ?? null,
+        zip_code: null,
     };
 }
