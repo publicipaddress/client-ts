@@ -7,6 +7,15 @@ export type {
     RequestFunction,
     BuildQueryFunction,
 } from "./types";
-export type { GeolocationResponse } from "./geolocation/types";
+export type {
+    GeolocationLocationResponse,
+    GeolocationRegionResponse,
+    GeolocationSubregionResponse,
+    GeolocationCountryResponse,
+    GeolocationStateResponse,
+    GeolocationCityResponse,
+    GeolocationCurrencyResponse,
+    GeolocationTimezoneResponse,
+} from "./geolocation/types";
 export type { NetworkResponse } from "./network/types";
 export type { WeatherResponse } from "./weather/types";

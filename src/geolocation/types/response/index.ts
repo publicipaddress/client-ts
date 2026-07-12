@@ -1,2 +1,10 @@
-export type { GeolocationResponse } from "./geolocation";
-export type { GeolocationCountryResponse, GeolocationCityResponse } from "./geolocation";
+export type {
+    GeolocationLocationResponse,
+    GeolocationRegionResponse,
+    GeolocationSubregionResponse,
+    GeolocationCountryResponse,
+    GeolocationStateResponse,
+    GeolocationCityResponse,
+    GeolocationCurrencyResponse,
+    GeolocationTimezoneResponse,
+} from "./geolocation";

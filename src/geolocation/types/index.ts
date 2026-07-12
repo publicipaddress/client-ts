@@ -1,6 +1,11 @@
 export type { GeolocationRequest } from "./request";
 export type {
-    GeolocationResponse,
+    GeolocationLocationResponse,
+    GeolocationRegionResponse,
+    GeolocationSubregionResponse,
     GeolocationCountryResponse,
+    GeolocationStateResponse,
     GeolocationCityResponse,
+    GeolocationCurrencyResponse,
+    GeolocationTimezoneResponse,
 } from "./response";
