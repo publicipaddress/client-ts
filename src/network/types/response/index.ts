@@ -1,2 +1,7 @@
-export type { NetworkResponse } from "./network";
-export type { NetworkAutonomousSystemResponse } from "./network";
+export type {
+    NetworkMeResponse,
+    NetworkAutonomousSystemResponse,
+    NetworkSecurityReportIndicatorResponse,
+    NetworkSecurityReportsResponse,
+    NetworkSecurityReportResponse,
+} from "./network";

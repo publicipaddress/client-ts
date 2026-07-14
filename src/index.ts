@@ -17,5 +17,11 @@ export type {
     GeolocationCurrencyResponse,
     GeolocationTimezoneResponse,
 } from "./geolocation/types";
-export type { NetworkResponse } from "./network/types";
+export type {
+    NetworkMeResponse,
+    NetworkAutonomousSystemResponse,
+    NetworkSecurityReportIndicatorResponse,
+    NetworkSecurityReportsResponse,
+    NetworkSecurityReportResponse,
+} from "./network/types";
 export type { WeatherResponse } from "./weather/types";

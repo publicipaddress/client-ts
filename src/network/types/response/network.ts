@@ -1,11 +1,26 @@
-export interface NetworkResponse {
+export interface NetworkMeResponse {
     ip: string | null;
-    as_number: string | null;
-    organization: string | null;
-    version: string | null;
+    version: number | null;
 }
 
 export interface NetworkAutonomousSystemResponse {
-    number?: string;
-    organization?: string;
+    number: string | null;
+    organization: string | null;
+}
+
+export interface NetworkSecurityReportIndicatorResponse {
+    [key: string]: unknown;
+}
+
+export interface NetworkSecurityReportsResponse {
+    success: boolean | null;
+    total_indicators: number | null;
+    indicators: NetworkSecurityReportIndicatorResponse[];
+}
+
+export interface NetworkSecurityReportResponse {
+    success: boolean | null;
+    ip: string | null;
+    total_indicators: number | null;
+    indicators: NetworkSecurityReportIndicatorResponse[];
 }

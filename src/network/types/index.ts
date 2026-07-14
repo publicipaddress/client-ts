@@ -1,2 +1,8 @@
 export type { NetworkRequest } from "./request";
-export type { NetworkResponse, NetworkAutonomousSystemResponse } from "./response";
+export type {
+    NetworkMeResponse,
+    NetworkAutonomousSystemResponse,
+    NetworkSecurityReportIndicatorResponse,
+    NetworkSecurityReportsResponse,
+    NetworkSecurityReportResponse,
+} from "./response";
