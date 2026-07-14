@@ -24,4 +24,4 @@ export type {
     NetworkSecurityReportsResponse,
     NetworkSecurityReportResponse,
 } from "./network/types";
-export type { WeatherResponse } from "./weather/types";
+export type { WeatherCurrentResponse, WeatherForecastResponse } from "./weather/types";

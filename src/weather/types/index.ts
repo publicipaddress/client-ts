@@ -1,2 +1,2 @@
 export type { WeatherRequest } from "./request";
-export type { WeatherResponse } from "./response";
+export type { WeatherCurrentResponse, WeatherForecastResponse } from "./response";

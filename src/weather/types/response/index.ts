@@ -1,1 +1,1 @@
-export type { WeatherResponse } from "./weather";
+export type { WeatherCurrentResponse, WeatherForecastResponse } from "./weather";
