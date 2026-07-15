@@ -7,6 +7,8 @@ export type {
     RequestFunction,
     BuildQueryFunction,
     IP,
+    IPv4,
+    IPv6,
 } from "./types";
 export type {
     GeolocationLocationResponse,
