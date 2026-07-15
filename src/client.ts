@@ -1,4 +1,5 @@
 import type {
+  IP,
   PublicIPAddressInfoConfig,
 } from "./types";
 import { getGeolocation } from "./geolocation";
@@ -70,15 +71,15 @@ export class PublicIPAddressInfo {
     return query.length > 0 ? `${endpoint}?${query}` : endpoint;
   }
 
-  async getGeolocation(ip: string) {
+  async getGeolocation(ip: IP) {
     return getGeolocation(this.request.bind(this), this.buildQuery.bind(this), { ip });
   }
 
-  async getNetwork(ip: string) {
+  async getNetwork(ip: IP) {
     return getNetwork(this.request.bind(this), this.buildQuery.bind(this), { ip });
   }
 
-  async getWeather(ip: string) {
+  async getWeather(ip: IP) {
     return getWeather(this.request.bind(this), this.buildQuery.bind(this), { ip });
   }
 }

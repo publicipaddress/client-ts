@@ -6,6 +6,7 @@ export type {
     PublicIPAddressInfoConfig,
     RequestFunction,
     BuildQueryFunction,
+    IP,
 } from "./types";
 export type {
     GeolocationLocationResponse,

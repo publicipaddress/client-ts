@@ -1,5 +1,7 @@
+import type { IP } from "@/types";
+
 export interface GeolocationRequest {
-    ip: string;
+    ip: IP;
 }
 
 export type GeolocationRegionRequest = GeolocationRequest;

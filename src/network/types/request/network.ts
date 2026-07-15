@@ -1,3 +1,5 @@
+import type { IP } from "@/types";
+
 export interface NetworkRequest {
-    ip: string;
+    ip: IP;
 }
