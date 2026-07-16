@@ -21,12 +21,11 @@ export class PublicIPAddressInfo {
     return `https://publicipaddress.info/api/v${this.apiVersion}`;
   }
 
-  private async request<T>(endpoint: string): Promise<T> {
+  private readonly request = async <T>(endpoint: string): Promise<T> => {
     const url = `${this.getBaseUrl()}${endpoint}`;
-    const headers: HeadersInit = {};
-    if (this.apiKey) {
-      headers.Authorization = `Bearer ${this.apiKey}`;
-    }
+    const headers: HeadersInit = this.apiKey
+      ? { Authorization: `Bearer ${this.apiKey}` }
+      : {};
 
     const controller = new AbortController();
     const timeoutId =
@@ -56,9 +55,12 @@ export class PublicIPAddressInfo {
         clearTimeout(timeoutId);
       }
     }
-  }
+  };
 
-  private buildQuery(endpoint: string, params: Record<string, string | number | undefined>): string {
+  private readonly buildQuery = (
+    endpoint: string,
+    params: Record<string, string | number | undefined>,
+  ): string => {
     const searchParams = new URLSearchParams();
 
     for (const [key, value] of Object.entries(params)) {
@@ -69,17 +71,17 @@ export class PublicIPAddressInfo {
 
     const query = searchParams.toString();
     return query.length > 0 ? `${endpoint}?${query}` : endpoint;
-  }
+  };
 
   async getGeolocation(ip: IP) {
-    return getGeolocation(this.request.bind(this), this.buildQuery.bind(this), { ip });
+    return getGeolocation(this.request, this.buildQuery, { ip });
   }
 
   async getNetwork(ip: IP) {
-    return getNetwork(this.request.bind(this), this.buildQuery.bind(this), { ip });
+    return getNetwork(this.request, this.buildQuery, { ip });
   }
 
   async getWeather(ip: IP) {
-    return getWeather(this.request.bind(this), this.buildQuery.bind(this), { ip });
+    return getWeather(this.request, this.buildQuery, { ip });
   }
 }
