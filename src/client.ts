@@ -1,87 +1,20 @@
-import type {
-  IP,
-  PublicIPAddressInfoConfig,
-} from "./types";
-import { getGeolocation } from "./geolocation";
-import { getNetwork } from "./network";
-import { getWeather } from "./weather";
+import type { IP, PublicIPAddressInfoConfig } from "./types";
+import { HttpClient } from "./httpClient";
+import { GeolocationService } from "./geolocation";
+import { NetworkService } from "./network";
+import { WeatherService } from "./weather";
 
 export class PublicIPAddressInfo {
-  private readonly apiKey: string;
-  private readonly apiVersion: number;
-  private readonly timeout: number;
+  public readonly geolocation: GeolocationService;
+  public readonly network: NetworkService;
+  public readonly weather: WeatherService;
+
+  private readonly httpClient: HttpClient;
 
   constructor(config: PublicIPAddressInfoConfig) {
-    this.apiKey = config.apiKey;
-    this.apiVersion = config.apiVersion ?? 1;
-    this.timeout = config.timeout ?? 10000;
-  }
-
-  private getBaseUrl(): string {
-    return `https://publicipaddress.info/api/v${this.apiVersion}`;
-  }
-
-  private readonly request = async <T>(endpoint: string): Promise<T> => {
-    const url = `${this.getBaseUrl()}${endpoint}`;
-    const headers: HeadersInit = this.apiKey
-      ? { Authorization: `Bearer ${this.apiKey}` }
-      : {};
-
-    const controller = new AbortController();
-    const timeoutId =
-      this.timeout > 0
-        ? globalThis.setTimeout(() => controller.abort(), this.timeout)
-        : undefined;
-
-    try {
-      const response = await fetch(url, {
-        headers,
-        signal: controller.signal,
-      });
-
-      if (!response.ok) {
-        throw new Error(`API request failed: ${response.status} ${response.statusText}`);
-      }
-
-      return (await response.json()) as T;
-    } catch (error) {
-      if (error instanceof Error && error.name === 'AbortError') {
-        throw new Error(`API request timed out after ${this.timeout}ms`);
-      }
-
-      throw error;
-    } finally {
-      if (timeoutId !== undefined) {
-        clearTimeout(timeoutId);
-      }
-    }
-  };
-
-  private readonly buildQuery = (
-    endpoint: string,
-    params: Record<string, string | number | undefined>,
-  ): string => {
-    const searchParams = new URLSearchParams();
-
-    for (const [key, value] of Object.entries(params)) {
-      if (value !== undefined) {
-        searchParams.set(key, String(value));
-      }
-    }
-
-    const query = searchParams.toString();
-    return query.length > 0 ? `${endpoint}?${query}` : endpoint;
-  };
-
-  async getGeolocation(ip: IP) {
-    return getGeolocation(this.request, this.buildQuery, { ip });
-  }
-
-  async getNetwork(ip: IP) {
-    return getNetwork(this.request, this.buildQuery, { ip });
-  }
-
-  async getWeather(ip: IP) {
-    return getWeather(this.request, this.buildQuery, { ip });
+    this.httpClient = new HttpClient(config);
+    this.geolocation = new GeolocationService(this.httpClient);
+    this.network = new NetworkService(this.httpClient);
+    this.weather = new WeatherService(this.httpClient);
   }
 }

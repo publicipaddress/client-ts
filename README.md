@@ -21,18 +21,18 @@ const config: PublicIPAddressInfoConfig = {
   timeout: 10000,
 };
 
-const ipInfo = new PublicIPAddressInfo(config);
+const api = new PublicIPAddressInfo(config);
 
 async function run() {
   try {
-    const geo = await ipInfo.getGeolocation("8.8.8.8");
-    console.log("Country:", geo.country);
+    const geoData = await api.geolocation.getByIp("8.8.8.8");
+    console.log("Country:", geoData.country);
 
-    const net = await ipInfo.getNetwork("8.8.8.8");
-    console.log("ASN:", net.as_number);
+    const asnData = await api.network.getByIp("8.8.8.8");
+    console.log("ASN:", asnData.number);
 
-    const weather = await ipInfo.getWeather("8.8.8.8");
-    console.log("Weather:", weather.weather?.current);
+    const weatherData = await api.weather.getByIp("8.8.8.8");
+    console.log("Weather data:", weatherData.weather);
   } catch (error) {
     console.error("Error fetching IP info:", error);
   }
@@ -43,7 +43,7 @@ run();
 
 ## Supported Data Properties
 
-### `getGeolocation(ip)`
+### `geolocation.getByIp(ip)`
 Returns a merged geolocation object built from the `/geolocation` endpoints. It contains:
 - `city` (string): Name of the city.
 - `region` (string): Name of the state/region.
@@ -54,21 +54,18 @@ Returns a merged geolocation object built from the `/geolocation` endpoints. It 
 - `timezone` (string): Timezone name.
 - `zip_code` (string): Postal code when available from the lookup endpoints.
 
-### `getNetwork(ip)`
-Returns an object built from `/network` containing:
-- `ip` (string): The requested IP address.
-- `as_number` (string): The Autonomous System Number (ASN).
-- `organization` (string): The network organization name.
-- `version` (string): IP version when available.
+### `network.getByIp(ip)`
+Returns the `/ips/{ip}/autonomous-system` response containing:
+- `number` (string | null): The autonomous system number.
+- `organization` (string | null): The network organization name.
 
-### `getWeather(ip)`
+### `weather.getByIp(ip)`
 Returns an object from `/weather/current` containing:
-- `latitude` (number): Latitude coordinate.
-- `longitude` (number): Longitude coordinate.
-- `weather` (object): Detailed weather data including:
-    - `timezone`, `elevation`
-    - `current` (temperature_2m, relative_humidity_2m, apparent_temperature, precipitation, wind_speed_10m, etc.)
-    - `daily` (daily forecast data)
+- `success` (boolean | null): Whether the request succeeded.
+- `ip` (string | null): The requested IP address.
+- `latitude` (number | null): Latitude coordinate.
+- `longitude` (number | null): Longitude coordinate.
+- `weather` (object | null): Detailed weather payload returned by the API.
 
 ## Features
 
@@ -81,6 +78,6 @@ Returns an object from `/weather/current` containing:
 | Method | Purpose |
 | :--- | :--- |
 | `new PublicIPAddressInfo(config)` | Create a client with fixed API settings |
-| `ipInfo.getGeolocation(ip)` | Geolocation lookups |
-| `ipInfo.getNetwork(ip)` | Network/AS lookups |
-| `ipInfo.getWeather(ip)` | Weather conditions for an IP location |
+| `api.geolocation.getByIp(ip)` | Geolocation lookups |
+| `api.network.getByIp(ip)` | Network/AS lookups |
+| `api.weather.getByIp(ip)` | Weather conditions for an IP location |

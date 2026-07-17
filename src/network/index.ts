@@ -1,18 +1,9 @@
-import type { BuildQueryFunction, RequestFunction } from "../types";
-import type {
-    NetworkRequest,
+export { NetworkService } from "./service";
+export type { NetworkRequest } from "./types";
+export type {
     NetworkMeResponse,
+    NetworkAutonomousSystemResponse,
+    NetworkSecurityReportIndicatorResponse,
+    NetworkSecurityReportsResponse,
+    NetworkSecurityReportResponse,
 } from "./types";
-
-export async function getNetwork(
-    request: RequestFunction,
-    buildQuery: BuildQueryFunction,
-    input: NetworkRequest,
-): Promise<NetworkMeResponse> {
-    const network = await request<NetworkMeResponse>(buildQuery("/network/me", {}));
-
-    return {
-        ip: network.ip ?? null,
-        version: network.version ?? null,
-    };
-}

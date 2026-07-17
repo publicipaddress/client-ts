@@ -1,7 +1,7 @@
 export { PublicIPAddressInfo } from "./client";
-export { getGeolocation } from "./geolocation";
-export { getNetwork } from "./network";
-export { getWeather } from "./weather";
+export { GeolocationService } from "./geolocation";
+export { NetworkService } from "./network";
+export { WeatherService } from "./weather";
 export type {
     PublicIPAddressInfoConfig,
     RequestFunction,
