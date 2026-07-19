@@ -1,5 +1,7 @@
+import type { PublicIP } from "../../../types";
+
 export interface NetworkMeResponse {
-    ip: string | null;
+    ip: PublicIP | null;
     version: number | null;
 }
 
@@ -20,7 +22,7 @@ export interface NetworkSecurityReportsResponse {
 
 export interface NetworkSecurityReportResponse {
     success: boolean | null;
-    ip: string | null;
+    ip: PublicIP | null;
     total_indicators: number | null;
     indicators: NetworkSecurityReportIndicatorResponse[];
 }
