@@ -2,6 +2,7 @@ export { PublicIPAddressInfo } from "./client";
 export { GeolocationService } from "./geolocation";
 export { NetworkService } from "./network";
 export { WeatherService } from "./weather";
+export { isIP, isIPv4, isIPv6, isPublicIP, isPrivateIP } from "./types";
 export type {
     PublicIPAddressInfoConfig,
     RequestFunction,
