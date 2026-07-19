@@ -1,4 +1,4 @@
-import type { IP } from "../types";
+import type { PublicIP } from "../types";
 import type { HttpClientLike } from "../httpClient";
 import { GetByIpService } from "../getByIp";
 import type { WeatherCurrentResponse } from "./types";
@@ -8,7 +8,7 @@ export class WeatherService extends GetByIpService<WeatherCurrentResponse> {
         super(httpClient);
     }
 
-    protected async lookupByIp(ip: IP): Promise<WeatherCurrentResponse> {
+    protected async lookupByIp(ip: PublicIP): Promise<WeatherCurrentResponse> {
         const response = await this.httpClient.request<WeatherCurrentResponse>(
             this.httpClient.buildQuery("/weather/current", { ip }),
         );

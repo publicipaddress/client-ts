@@ -1,5 +1,5 @@
-import type { IP } from "../../../types";
+import type { PublicIP } from "../../../types";
 
 export interface WeatherRequest {
-    ip: IP;
+    ip: PublicIP;
 }

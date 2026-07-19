@@ -1,4 +1,4 @@
-import type { IP } from "../types";
+import type { PublicIP } from "../types";
 import type { HttpClientLike } from "../httpClient";
 import { GetByIpService } from "../getByIp";
 import type {
@@ -10,7 +10,7 @@ export class NetworkService extends GetByIpService<NetworkAutonomousSystemRespon
         super(httpClient);
     }
 
-    protected async lookupByIp(ip: IP): Promise<NetworkAutonomousSystemResponse> {
+    protected async lookupByIp(ip: PublicIP): Promise<NetworkAutonomousSystemResponse> {
         const response = await this.httpClient.request<NetworkAutonomousSystemResponse>(
             this.httpClient.buildQuery(`/ips/${ip}/autonomous-system`, {}),
         );

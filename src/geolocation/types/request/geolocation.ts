@@ -1,7 +1,7 @@
-import type { IP } from "../../../types";
+import type { PublicIP } from "../../../types";
 
 export interface GeolocationRequest {
-    ip: IP;
+    ip: PublicIP;
 }
 
 export type GeolocationRegionRequest = GeolocationRequest;

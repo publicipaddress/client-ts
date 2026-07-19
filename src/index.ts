@@ -10,6 +10,9 @@ export type {
     IP,
     IPv4,
     IPv6,
+    PublicIP,
+    PublicIPv4,
+    PublicIPv6,
 } from "./types";
 export type {
     GeolocationLocationResponse,

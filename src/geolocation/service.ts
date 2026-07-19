@@ -1,4 +1,4 @@
-import type { IP } from "../types";
+import type { PublicIP } from "../types";
 import type { HttpClientLike } from "../httpClient";
 import { GetByIpService } from "../getByIp";
 import type {
@@ -12,7 +12,7 @@ export class GeolocationService extends GetByIpService<GeolocationLocationRespon
         super(httpClient);
     }
 
-    protected async lookupByIp(ip: IP): Promise<GeolocationLocationResponse> {
+    protected async lookupByIp(ip: PublicIP): Promise<GeolocationLocationResponse> {
         const [countries, cities] = await Promise.all([
             this.httpClient.request<GeolocationCountryResponse[]>(
                 this.httpClient.buildQuery("/geolocation/countries", { ip, limit: 1 }),
