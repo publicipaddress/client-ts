@@ -73,14 +73,15 @@ export class APIError extends Error {
 
         // Try errors array
         if (Array.isArray(body.errors) && body.errors.length > 0) {
-            const firstError = body.errors[0];
-            if (typeof firstError === "string") {
-                return firstError;
-            }
-            if (typeof firstError === "object" && firstError !== null) {
-                const errorObj = firstError as Record<string, unknown>;
-                const msg = this.extractStringValue(errorObj.message);
-                if (msg) return msg;
+            for (const error of body.errors) {
+                if (typeof error === "string" && error.trim()) {
+                    return error;
+                }
+                if (typeof error === "object" && error !== null) {
+                    const errorObj = error as Record<string, unknown>;
+                    const msg = this.extractStringValue(errorObj.message);
+                    if (msg) return msg;
+                }
             }
         }
 
