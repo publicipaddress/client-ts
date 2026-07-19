@@ -1,8 +1,8 @@
 import type { PublicIP, PublicIPAddressInfoConfig } from "./types";
 import { HttpClient } from "./httpClient";
-import { GeolocationService } from "./geolocation";
-import { NetworkService } from "./network";
-import { WeatherService } from "./weather";
+import { GeolocationService } from "../geolocation";
+import { NetworkService } from "../network";
+import { WeatherService } from "../weather";
 
 export class PublicIPAddressInfo {
   public readonly geolocation: GeolocationService;

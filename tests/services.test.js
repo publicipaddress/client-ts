@@ -89,6 +89,23 @@ describe('service modules', () => {
         });
     });
 
+    test('GeolocationService handles null lookup responses safely', async () => {
+        const httpClient = createStubHttpClient({ response: [null, null] });
+        const service = new GeolocationService(httpClient);
+        const result = await service.getByIp('1.1.1.1');
+
+        assert.deepEqual(result, {
+            city: null,
+            region: null,
+            country: null,
+            country_code: null,
+            latitude: null,
+            longitude: null,
+            timezone: null,
+            zip_code: null,
+        });
+    });
+
     test('NetworkService returns the ASN response shape', async () => {
         const httpClient = createStubHttpClient({
             response: { number: 13335, organization: 'Cloudflare, Inc.' },

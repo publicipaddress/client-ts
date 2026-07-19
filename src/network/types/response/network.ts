@@ -1,4 +1,4 @@
-import type { PublicIP } from "../../../types";
+import type { PublicIP } from "../../../core/types";
 
 export interface NetworkMeResponse {
     ip: PublicIP | null;

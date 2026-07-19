@@ -1,6 +1,6 @@
-import type { PublicIP } from "../types";
-import type { HttpClientLike } from "../httpClient";
-import { GetByIpService } from "../getByIp";
+import type { PublicIP } from "../core/types";
+import type { HttpClientLike } from "../core/httpClient";
+import { GetByIpService } from "../core/getByIp";
 import type {
     NetworkAutonomousSystemResponse,
 } from "./types";

@@ -1,8 +1,8 @@
-export { PublicIPAddressInfo } from "./client";
+export { PublicIPAddressInfo } from "./core/client";
 export { GeolocationService } from "./geolocation";
 export { NetworkService } from "./network";
 export { WeatherService } from "./weather";
-export { isIP, isIPv4, isIPv6, isPublicIP, isPrivateIP } from "./types";
+export { isIP, isIPv4, isIPv6, isPublicIP, isPrivateIP } from "./core/types";
 export type {
     PublicIPAddressInfoConfig,
     RequestFunction,
@@ -13,7 +13,7 @@ export type {
     PublicIP,
     PublicIPv4,
     PublicIPv6,
-} from "./types";
+} from "./core/types";
 export type {
     GeolocationLocationResponse,
     GeolocationRegionResponse,
