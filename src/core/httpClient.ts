@@ -1,4 +1,5 @@
 import type { PublicIPAddressInfoConfig } from "./types";
+import { APIError } from "./errors/APIError";
 
 export interface HttpClientLike {
     request<T>(endpoint: string): Promise<T>;
@@ -39,13 +40,23 @@ export class HttpClient implements HttpClientLike {
             });
 
             if (!response.ok) {
-                throw new Error(`API request failed: ${response.status} ${response.statusText}`);
+                let responseBody: unknown = null;
+                try {
+                    responseBody = await response.json();
+                } catch {
+                    // Response body is not JSON, that's okay
+                }
+                throw new APIError(`API request failed: ${response.status} ${response.statusText}`, response.status, responseBody);
             }
 
             return (await response.json()) as T;
         } catch (error) {
+            if (error instanceof APIError) {
+                throw error;
+            }
+
             if (error instanceof Error && error.name === "AbortError") {
-                throw new Error(`API request timed out after ${this.timeout}ms`);
+                throw new APIError(`API request timed out after ${this.timeout}ms`);
             }
 
             throw error;
