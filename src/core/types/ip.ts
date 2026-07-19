@@ -10,11 +10,13 @@ export type IPv6 =
 
 export type IP = IPv4 | IPv6;
 
-// Branded aliases that make the public/private intent explicit at the type level.
-export type PublicIPv4 = IPv4 & { readonly __ipKind: "public" };
-export type PrivateIPv4 = IPv4 & { readonly __ipKind: "private" };
-export type PublicIPv6 = IPv6 & { readonly __ipKind: "public" };
-export type PrivateIPv6 = IPv6 & { readonly __ipKind: "private" };
+// The public/private aliases are lightweight semantic aliases over the IP template
+// literal types so plain string literals remain ergonomic in user code, while the
+// runtime helpers enforce the public/private rules.
+export type PublicIPv4 = IPv4;
+export type PrivateIPv4 = IPv4;
+export type PublicIPv6 = IPv6;
+export type PrivateIPv6 = IPv6;
 export type PublicIP = PublicIPv4 | PublicIPv6;
 export type PrivateIP = PrivateIPv4 | PrivateIPv6;
 
