@@ -1,1 +1,0 @@
-export type { PublicIPAddressInfoConfig } from "./client";
