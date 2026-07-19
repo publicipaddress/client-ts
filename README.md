@@ -21,17 +21,17 @@ const config: PublicIPAddressInfoConfig = {
   timeout: 10000,
 };
 
-const api = new PublicIPAddressInfo(config);
+const { geolocation, network, weather } = new PublicIPAddressInfo(config);
 
 async function run() {
   try {
-    const geoData = await api.geolocation.getByIp("8.8.8.8");
+    const geoData = await geolocation.getByIp("8.8.8.8");
     console.log("Country:", geoData.country);
 
-    const asnData = await api.network.getByIp("8.8.8.8");
+    const asnData = await network.getByIp("8.8.8.8");
     console.log("ASN:", asnData.number);
 
-    const weatherData = await api.weather.getByIp("8.8.8.8");
+    const weatherData = await weather.getByIp("8.8.8.8");
     console.log("Weather data:", weatherData.weather);
   } catch (error) {
     console.error("Error fetching IP info:", error);
