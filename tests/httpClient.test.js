@@ -1,7 +1,7 @@
 const { afterEach, beforeEach, describe, test } = require('node:test');
 const assert = require('node:assert/strict');
 
-const { HttpClient } = require('../dist/httpClient');
+const { HttpClient } = require('../dist/core/HttpClient');
 
 const originalFetch = globalThis.fetch;
 

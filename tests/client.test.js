@@ -1,7 +1,7 @@
 const { describe, test } = require('node:test');
 const assert = require('node:assert/strict');
 
-const { PublicIPAddressInfo } = require('../dist/client');
+const { PublicIPAddressInfo } = require('../dist/core/Client');
 
 describe('PublicIPAddressInfo client', () => {
     test('constructs the client and exposes the service modules', () => {

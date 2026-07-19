@@ -1,5 +1,5 @@
 import type { PublicIP, PublicIPAddressInfoConfig } from "./types";
-import { HttpClient } from "./httpClient";
+import { HttpClient } from "./HttpClient";
 import { GeolocationService } from "../geolocation";
 import { NetworkService } from "../network";
 import { WeatherService } from "../weather";

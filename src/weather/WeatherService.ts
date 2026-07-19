@@ -1,9 +1,9 @@
 import type { PublicIP } from "../core/types";
-import type { HttpClientLike } from "../core/httpClient";
-import { GetByIpService } from "../core/getByIp";
+import type { HttpClientLike } from "../core/HttpClient";
+import { BaseService } from "../core/BaseService";
 import type { WeatherCurrentResponse } from "./types";
 
-export class WeatherService extends GetByIpService<WeatherCurrentResponse> {
+export class WeatherService extends BaseService<WeatherCurrentResponse> {
     constructor(httpClient: HttpClientLike) {
         super(httpClient);
     }

@@ -7,7 +7,7 @@ const {
     isIPv6,
     isPublicIP,
     isPrivateIP,
-} = require('../dist/types/ip');
+} = require('../dist/core/types/ip');
 
 describe('IP helpers', () => {
     describe('isIPv4', () => {
