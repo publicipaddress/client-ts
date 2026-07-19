@@ -12,7 +12,7 @@ export class GeolocationService extends GetByIpService<GeolocationLocationRespon
         super(httpClient);
     }
 
-    protected async lookupByIp(ip: PublicIP): Promise<GeolocationLocationResponse> {
+    public async getByIp(ip: PublicIP): Promise<GeolocationLocationResponse> {
         const [countriesResponse, citiesResponse] = await Promise.all([
             this.httpClient.request<GeolocationCountryResponse[]>(
                 this.httpClient.buildQuery("/geolocation/countries", { ip, limit: 1 }),

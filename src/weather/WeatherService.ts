@@ -8,7 +8,7 @@ export class WeatherService extends GetByIpService<WeatherCurrentResponse> {
         super(httpClient);
     }
 
-    protected async lookupByIp(ip: PublicIP): Promise<WeatherCurrentResponse> {
+    public async getByIp(ip: PublicIP): Promise<WeatherCurrentResponse> {
         const response = await this.httpClient.request<WeatherCurrentResponse>(
             this.httpClient.buildQuery("/weather/current", { ip }),
         );

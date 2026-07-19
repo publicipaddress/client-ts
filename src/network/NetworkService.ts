@@ -10,7 +10,7 @@ export class NetworkService extends GetByIpService<NetworkAutonomousSystemRespon
         super(httpClient);
     }
 
-    protected async lookupByIp(ip: PublicIP): Promise<NetworkAutonomousSystemResponse> {
+    public async getByIp(ip: PublicIP): Promise<NetworkAutonomousSystemResponse> {
         const response = await this.httpClient.request<NetworkAutonomousSystemResponse>(
             this.httpClient.buildQuery(`/ips/${ip}/autonomous-system`, {}),
         );
