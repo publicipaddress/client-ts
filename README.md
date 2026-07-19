@@ -95,11 +95,3 @@ These helpers are useful when you want to guard user input or enforce public-onl
 - **Versatile:** Get comprehensive geolocation, network, and weather details for IP addresses.
 - **Typed:** Built with TypeScript for excellent IDE support.
 
-## Available Modules
-
-| Method | Purpose |
-| :--- | :--- |
-| `new PublicIPAddressInfo(config)` | Create a client with fixed API settings |
-| `api.geolocation.getByIp(ip)` | Geolocation lookups |
-| `api.network.getByIp(ip)` | Network/AS lookups |
-| `api.weather.getByIp(ip)` | Weather conditions for an IP location |
