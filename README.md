@@ -67,6 +67,28 @@ Returns an object from `/weather/current` containing:
 - `longitude` (number | null): Longitude coordinate.
 - `weather` (object | null): Detailed weather payload returned by the API.
 
+## IP Type Verification Helpers
+
+You can validate and classify IP addresses before making lookups:
+
+```typescript
+import {
+  isIPv4,
+  isIPv6,
+  isIP,
+  isPublicIP,
+  isPrivateIP,
+} from "publicipaddress";
+
+console.log(isIPv4("8.8.8.8")); // true
+console.log(isIPv6("2001:4860:4860::8888")); // true
+console.log(isIP("8.8.8.8")); // true
+console.log(isPublicIP("8.8.8.8")); // true
+console.log(isPrivateIP("192.168.1.1")); // true
+```
+
+These helpers are useful when you want to guard user input or enforce public-only IP addresses for lookups.
+
 ## Features
 
 - **Intuitive:** Simple API design for easy discoverability.
