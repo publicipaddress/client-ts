@@ -1,4 +1,4 @@
-export { NetworkService } from "./service";
+export { NetworkService } from "./NetworkService";
 export type { NetworkRequest } from "./types";
 export type {
     NetworkMeResponse,

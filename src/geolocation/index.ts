@@ -1,4 +1,4 @@
-export { GeolocationService } from "./service";
+export { GeolocationService } from "./GeolocationService";
 export type {
     GeolocationRequest,
     GeolocationRegionRequest,

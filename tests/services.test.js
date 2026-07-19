@@ -1,9 +1,9 @@
 const { describe, test } = require('node:test');
 const assert = require('node:assert/strict');
 
-const { GeolocationService } = require('../dist/geolocation/service');
-const { NetworkService } = require('../dist/network/service');
-const { WeatherService } = require('../dist/weather/service');
+const { GeolocationService } = require('../dist/geolocation/GeolocationService');
+const { NetworkService } = require('../dist/network/NetworkService');
+const { WeatherService } = require('../dist/weather/WeatherService');
 
 function createStubHttpClient(overrides = {}) {
     return {
