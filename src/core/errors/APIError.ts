@@ -1,126 +1,105 @@
 export class APIError extends Error {
     public readonly statusCode?: number;
-    public readonly userMessage: string;
-    private readonly responseBody?: unknown;
+    public readonly responseBody?: unknown;
 
     constructor(message: string, statusCode?: number, responseBody?: unknown) {
         super(message);
         this.name = "APIError";
         this.statusCode = statusCode;
         this.responseBody = responseBody;
-        this.userMessage = this.getUserFriendlyMessage(statusCode, message, responseBody);
+
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
     }
 
-    private getUserFriendlyMessage(statusCode?: number, defaultMessage?: string, responseBody?: unknown): string {
-        // Try to extract error message from server response first
-        const serverMessage = this.extractServerErrorMessage(responseBody);
+    /**
+     * Get user-friendly error message.
+     * First tries to extract from server response, then falls back to standard HTTP message.
+     */
+    public getUserMessage(): string {
+        const serverMessage = this.extractServerErrorMessage();
         if (serverMessage) {
             return serverMessage;
         }
 
-        const statusMessages: Record<number, string> = {
-            400: "Invalid request. Please check your input parameters.",
-            401: "Authentication failed. Please verify your API key is valid and has the necessary permissions.",
-            403: "Access forbidden. Your API key does not have permission to access this resource.",
-            404: "Resource not found. The endpoint or service you requested does not exist.",
-            429: "Too many requests. Please wait a moment and try again.",
-            500: "Server error. The API service is experiencing issues. Please try again later.",
-            502: "Bad gateway. The API service is temporarily unavailable. Please try again later.",
-            503: "Service unavailable. The API service is under maintenance. Please try again later.",
-            504: "Gateway timeout. The API service is not responding. Please try again later.",
-        };
-
-        if (statusCode && statusMessages[statusCode]) {
-            return statusMessages[statusCode];
+        if (this.statusCode) {
+            return this.getHttpStatusMessage(this.statusCode);
         }
 
-        if (defaultMessage?.includes("timed out")) {
-            return "Request timed out. The API service took too long to respond. Please try again.";
+        return "An unexpected error occurred";
+    }
+
+    /**
+     * Get HTTP status message using Node.js built-in definitions if available.
+     */
+    private getHttpStatusMessage(statusCode: number): string {
+        try {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
+            const http = require("http");
+            if (http.STATUS_CODES && http.STATUS_CODES[statusCode]) {
+                return http.STATUS_CODES[statusCode];
+            }
+        } catch {
+            // http module not available (e.g., browser environment)
         }
 
-        return defaultMessage || "An unexpected API error occurred. Please try again later.";
+        return `HTTP Error ${statusCode}`;
     }
 
     /**
      * Extract error message from server response body.
-     * Supports multiple common response formats.
+     * Supports common API response formats: { error, message, detail, errors: [] }
      */
-    private extractServerErrorMessage(responseBody: unknown): string | null {
-        if (!responseBody) {
+    private extractServerErrorMessage(): string | null {
+        if (!this.responseBody || typeof this.responseBody !== "object") {
             return null;
         }
 
-        try {
-            // Handle JSON object responses
-            if (typeof responseBody === "object" && responseBody !== null) {
-                const body = responseBody as Record<string, unknown>;
+        const body = this.responseBody as Record<string, unknown>;
 
-                // Common API error response formats
-                const errorPatterns: (string | undefined)[] = [
-                    this.extractStringValue(body.error, "message"),  // { error: { message: "..." } }
-                    this.extractStringValue(body.error),             // { error: "..." }
-                    this.extractStringValue(body.message),           // { message: "..." }
-                    this.extractStringValue(body.detail),            // { detail: "..." }
-                    this.extractStringValue(body.description),       // { description: "..." }
-                ];
+        // Try common error message fields
+        const errorMessage = this.extractStringValue(body.error);
+        if (errorMessage) return errorMessage;
 
-                for (const pattern of errorPatterns) {
-                    if (pattern) {
-                        return pattern;
-                    }
-                }
+        const message = this.extractStringValue(body.message);
+        if (message) return message;
 
-                // Handle array of errors
-                if (Array.isArray(body.errors) && body.errors.length > 0) {
-                    const firstError = body.errors[0];
-                    if (typeof firstError === "string") {
-                        return firstError;
-                    }
-                    if (typeof firstError === "object" && firstError !== null) {
-                        const errorObj = firstError as Record<string, unknown>;
-                        const message = this.extractStringValue(errorObj.message);
-                        if (message) {
-                            return message;
-                        }
-                    }
-                }
+        const detail = this.extractStringValue(body.detail);
+        if (detail) return detail;
+
+        const description = this.extractStringValue(body.description);
+        if (description) return description;
+
+        // Try errors array
+        if (Array.isArray(body.errors) && body.errors.length > 0) {
+            const firstError = body.errors[0];
+            if (typeof firstError === "string") {
+                return firstError;
             }
-
-            // Handle string responses
-            if (typeof responseBody === "string" && responseBody.trim()) {
-                return responseBody;
+            if (typeof firstError === "object" && firstError !== null) {
+                const errorObj = firstError as Record<string, unknown>;
+                const msg = this.extractStringValue(errorObj.message);
+                if (msg) return msg;
             }
-        } catch {
-            // Silently fail and return null to fall back to default messages
-            return null;
         }
 
         return null;
     }
 
-    /**
-     * Safely extract a string value from an unknown type.
-     * Optionally extract a property from an object if the value is an object.
-     */
-    private extractStringValue(value: unknown, property?: string): string | undefined {
-        // If a property is requested and value is an object, try to get the property
-        if (property && typeof value === "object" && value !== null) {
-            const obj = value as Record<string, unknown>;
-            const propValue = obj[property];
-            if (typeof propValue === "string" && propValue.trim()) {
-                return propValue;
-            }
-        }
-
-        // Return the value if it's already a string
+    private extractStringValue(value: unknown): string | null {
         if (typeof value === "string" && value.trim()) {
             return value;
         }
 
-        return undefined;
-    }
+        if (typeof value === "object" && value !== null) {
+            const obj = value as Record<string, unknown>;
+            const message = obj.message;
+            if (typeof message === "string" && message.trim()) {
+                return message;
+            }
+        }
 
-    public toString(): string {
-        return this.userMessage;
+        return null;
     }
 }

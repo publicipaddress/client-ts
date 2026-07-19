@@ -1,2 +1,2 @@
 export { APIError } from "./APIError";
-export { formatError, formatErrorMessage, type FormattedError } from "./errorFormatter";
+export { formatErrorMessage } from "./errorFormatter";
