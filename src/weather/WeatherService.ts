@@ -1,4 +1,4 @@
-import type { PublicIP } from "../core/types";
+import type { PublicIP } from "../core/common";
 import type { HttpClientLike } from "../core/http";
 import { BaseService } from "../core/common";
 import type { WeatherCurrentResponse } from "./types";

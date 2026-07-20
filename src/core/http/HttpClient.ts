@@ -1,4 +1,4 @@
-import type { PublicIPAddressInfoConfig } from "../types";
+import type { PublicIPAddressInfoConfig } from "../client/types/Client";
 import { validateConfig } from "../validation";
 
 export interface HttpClientLike {

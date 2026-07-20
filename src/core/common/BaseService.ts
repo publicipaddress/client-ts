@@ -1,4 +1,4 @@
-import type { PublicIP } from "../types";
+import type { PublicIP } from "./types/Common";
 import type { HttpClientLike } from "../http/HttpClient";
 
 export abstract class BaseService<TResponse> {

@@ -1,4 +1,4 @@
-import type { PublicIPAddressInfoConfig } from "../types";
+import type { PublicIPAddressInfoConfig } from "./types/Client";
 import { GeolocationService } from "../../geolocation";
 import { NetworkService } from "../../network";
 import { WeatherService } from "../../weather";
