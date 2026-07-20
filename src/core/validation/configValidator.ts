@@ -1,4 +1,4 @@
-import type { PublicIPAddressInfoConfig } from "../client/types/Client";
+import type { PublicIPAddressInfoConfig } from "../client";
 
 /**
  * Validate the PublicIPAddressInfoConfig object
