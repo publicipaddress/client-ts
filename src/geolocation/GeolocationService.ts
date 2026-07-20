@@ -1,6 +1,6 @@
 import type { PublicIP } from "../core/types";
-import type { HttpClientLike } from "../core/HttpClient";
-import { BaseService } from "../core/BaseService";
+import type { HttpClientLike } from "../core/http";
+import { BaseService } from "../core/common";
 import type {
     GeolocationLocationResponse,
     GeolocationCountryResponse,

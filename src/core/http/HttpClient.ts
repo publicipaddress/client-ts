@@ -1,5 +1,5 @@
-import type { PublicIPAddressInfoConfig } from "./types";
-import { validateConfig } from "./validation";
+import type { PublicIPAddressInfoConfig } from "../types";
+import { validateConfig } from "../validation";
 
 export interface HttpClientLike {
     request<T>(endpoint: string): Promise<T>;
@@ -72,7 +72,7 @@ export class HttpClient implements HttpClientLike {
 
         if (typeof responseBody === 'object' && responseBody !== null) {
             const body = responseBody as Record<string, unknown>;
-            
+
             if (typeof body.error === 'string' && body.error.trim()) {
                 return body.error;
             }

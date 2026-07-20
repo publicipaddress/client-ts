@@ -1,4 +1,4 @@
-export { PublicIPAddressInfo } from "./core/Client";
+export { PublicIPAddressInfo } from "./core/client";
 export { GeolocationService } from "./geolocation";
 export { NetworkService } from "./network";
 export { WeatherService } from "./weather";
