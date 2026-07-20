@@ -1,5 +1,6 @@
 import type { PublicIPAddressInfoConfig } from "./types";
 import { APIError } from "./errors/APIError";
+import { validateConfig } from "./validation";
 
 export interface HttpClientLike {
     request<T>(endpoint: string): Promise<T>;
@@ -12,8 +13,9 @@ export class HttpClient implements HttpClientLike {
     private readonly timeout: number;
 
     constructor(config: PublicIPAddressInfoConfig) {
+        validateConfig(config);
         this.apiKey = config.apiKey;
-        this.apiVersion = config.apiVersion ?? 1;
+        this.apiVersion = config.apiVersion;
         this.timeout = config.timeout ?? 10000;
     }
 

@@ -16,7 +16,7 @@ describe('PublicIPAddressInfo client', () => {
     });
 
     test('uses default config values when options are omitted', () => {
-        const client = new PublicIPAddressInfo({ apiKey: '' });
+        const client = new PublicIPAddressInfo({ apiKey: 'valid-key', apiVersion: 1 });
         assert.ok(client.geolocation);
         assert.ok(client.network);
         assert.ok(client.weather);

@@ -1,6 +1,6 @@
 export interface PublicIPAddressInfoConfig {
   apiKey: string;
-  apiVersion?: number;
+  apiVersion: number;
   timeout?: number;
 }
 

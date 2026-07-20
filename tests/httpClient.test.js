@@ -22,7 +22,7 @@ describe('HttpClient', () => {
     });
 
     test('buildQuery serializes valid params and omits undefined values', () => {
-        const httpClient = new HttpClient({ apiKey: 'secret' });
+        const httpClient = new HttpClient({ apiKey: 'secret', apiVersion: 1 });
 
         const query = httpClient.buildQuery('/test', {
             ip: '8.8.8.8',
@@ -49,10 +49,10 @@ describe('HttpClient', () => {
         assert.deepEqual(requests[0].init.headers, { Authorization: 'Bearer secret' });
     });
 
-    test('request throws a useful error when the API responds with a failure status', async () => {
+    test('request throws a useful error when the API responses with a failure status', async () => {
         globalThis.fetch = async () => createJsonResponse({ message: 'bad' }, 500);
 
-        const httpClient = new HttpClient({ apiKey: 'secret' });
+        const httpClient = new HttpClient({ apiKey: 'secret', apiVersion: 1 });
 
         await assert.rejects(httpClient.request('/weather/current'), /API request failed: 500/);
     });
@@ -68,14 +68,14 @@ describe('HttpClient', () => {
             });
         };
 
-        const httpClient = new HttpClient({ apiKey: 'secret', timeout: 10 });
+        const httpClient = new HttpClient({ apiKey: 'secret', apiVersion: 1, timeout: 10 });
         await assert.rejects(httpClient.request('/weather/current'), /timed out after 10ms/);
     });
 
     test('request allows timeout to be disabled with zero', async () => {
         globalThis.fetch = async () => createJsonResponse({ ok: true });
 
-        const httpClient = new HttpClient({ apiKey: 'secret', timeout: 0 });
+        const httpClient = new HttpClient({ apiKey: 'secret', apiVersion: 1, timeout: 0 });
         const response = await httpClient.request('/health');
 
         assert.deepEqual(response, { ok: true });
