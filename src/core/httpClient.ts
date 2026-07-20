@@ -1,5 +1,4 @@
 import type { PublicIPAddressInfoConfig } from "./types";
-import { APIError } from "./errors/APIError";
 import { validateConfig } from "./validation";
 
 export interface HttpClientLike {
@@ -46,19 +45,16 @@ export class HttpClient implements HttpClientLike {
                 try {
                     responseBody = await response.json();
                 } catch {
-                    // Response body is not JSON, that's okay
+                    // Response body is not JSON
                 }
-                throw new APIError(`API request failed: ${response.status} ${response.statusText}`, response.status, responseBody);
+                const message = this.extractErrorMessage(responseBody, response.status);
+                throw new Error(message);
             }
 
             return (await response.json()) as T;
         } catch (error) {
-            if (error instanceof APIError) {
-                throw error;
-            }
-
             if (error instanceof Error && error.name === "AbortError") {
-                throw new APIError(`API request timed out after ${this.timeout}ms`);
+                throw new Error(`API request timed out after ${this.timeout}ms`);
             }
 
             throw error;
@@ -68,6 +64,38 @@ export class HttpClient implements HttpClientLike {
             }
         }
     };
+
+    private extractErrorMessage(responseBody: unknown, statusCode: number): string {
+        if (typeof responseBody === 'string' && responseBody.trim()) {
+            return responseBody;
+        }
+
+        if (typeof responseBody === 'object' && responseBody !== null) {
+            const body = responseBody as Record<string, unknown>;
+            
+            if (typeof body.error === 'string' && body.error.trim()) {
+                return body.error;
+            }
+            if (typeof body.message === 'string' && body.message.trim()) {
+                return body.message;
+            }
+            if (typeof body.detail === 'string' && body.detail.trim()) {
+                return body.detail;
+            }
+            if (typeof body.description === 'string' && body.description.trim()) {
+                return body.description;
+            }
+
+            if (typeof body.error === 'object' && body.error !== null) {
+                const errorObj = body.error as Record<string, unknown>;
+                if (typeof errorObj.message === 'string' && errorObj.message.trim()) {
+                    return errorObj.message;
+                }
+            }
+        }
+
+        return String(statusCode);
+    }
 
     public readonly buildQuery = (
         endpoint: string,

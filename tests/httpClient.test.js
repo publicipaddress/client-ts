@@ -54,7 +54,7 @@ describe('HttpClient', () => {
 
         const httpClient = new HttpClient({ apiKey: 'secret', apiVersion: 1 });
 
-        await assert.rejects(httpClient.request('/weather/current'), /API request failed: 500/);
+        await assert.rejects(httpClient.request('/weather/current'), /bad/);
     });
 
     test('request throws a timeout error when the request is aborted', async () => {
