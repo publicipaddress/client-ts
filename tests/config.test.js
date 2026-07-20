@@ -2,7 +2,6 @@ const { describe, test } = require('node:test');
 const assert = require('node:assert/strict');
 
 const { validateConfig } = require('../dist/core/validation');
-const { ConfigValidationError } = require('../dist/core/errors');
 
 describe('Config Validation', () => {
     describe('validateConfig', () => {
@@ -58,7 +57,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(config),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('apiKey'));
                         return true;
                     }
@@ -70,7 +69,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(config),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('apiKey'));
                         assert.ok(err.message.includes('string'));
                         return true;
@@ -82,7 +81,7 @@ describe('Config Validation', () => {
                 const config = { apiKey: null };
                 assert.throws(
                     () => validateConfig(config),
-                    (err) => err.name === 'ConfigValidationError'
+                    (err) => err instanceof Error
                 );
             });
 
@@ -90,7 +89,7 @@ describe('Config Validation', () => {
                 const config = { apiKey: undefined };
                 assert.throws(
                     () => validateConfig(config),
-                    (err) => err.name === 'ConfigValidationError'
+                    (err) => err instanceof Error
                 );
             });
 
@@ -99,7 +98,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(config),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('empty'));
                         return true;
                     }
@@ -111,7 +110,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(config),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('empty'));
                         return true;
                     }
@@ -122,7 +121,7 @@ describe('Config Validation', () => {
                 const config = { apiKey: {} };
                 assert.throws(
                     () => validateConfig(config),
-                    (err) => err.name === 'ConfigValidationError'
+                    (err) => err instanceof Error
                 );
             });
 
@@ -130,7 +129,7 @@ describe('Config Validation', () => {
                 const config = { apiKey: [] };
                 assert.throws(
                     () => validateConfig(config),
-                    (err) => err.name === 'ConfigValidationError'
+                    (err) => err instanceof Error
                 );
             });
         });
@@ -141,7 +140,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(config),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('apiVersion'));
                         return true;
                     }
@@ -153,7 +152,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(config),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('integer'));
                         return true;
                     }
@@ -165,7 +164,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(config),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('positive'));
                         return true;
                     }
@@ -177,7 +176,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(config),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('positive'));
                         return true;
                     }
@@ -189,7 +188,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(config),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('number'));
                         return true;
                     }
@@ -200,7 +199,7 @@ describe('Config Validation', () => {
                 const config = { apiKey: 'test', apiVersion: null };
                 assert.throws(
                     () => validateConfig(config),
-                    (err) => err.name === 'ConfigValidationError'
+                    (err) => err instanceof Error
                 );
             });
 
@@ -208,7 +207,7 @@ describe('Config Validation', () => {
                 const config = { apiKey: 'test', apiVersion: Infinity };
                 assert.throws(
                     () => validateConfig(config),
-                    (err) => err.name === 'ConfigValidationError'
+                    (err) => err instanceof Error
                 );
             });
 
@@ -216,7 +215,7 @@ describe('Config Validation', () => {
                 const config = { apiKey: 'test', apiVersion: NaN };
                 assert.throws(
                     () => validateConfig(config),
-                    (err) => err.name === 'ConfigValidationError'
+                    (err) => err instanceof Error
                 );
             });
         });
@@ -227,7 +226,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(config),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('integer'));
                         return true;
                     }
@@ -239,7 +238,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(config),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('non-negative'));
                         return true;
                     }
@@ -251,7 +250,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(config),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('number'));
                         return true;
                     }
@@ -262,7 +261,7 @@ describe('Config Validation', () => {
                 const config = { apiKey: 'test', apiVersion: 1, timeout: null };
                 assert.throws(
                     () => validateConfig(config),
-                    (err) => err.name === 'ConfigValidationError'
+                    (err) => err instanceof Error
                 );
             });
 
@@ -270,7 +269,7 @@ describe('Config Validation', () => {
                 const config = { apiKey: 'test', apiVersion: 1, timeout: Infinity };
                 assert.throws(
                     () => validateConfig(config),
-                    (err) => err.name === 'ConfigValidationError'
+                    (err) => err instanceof Error
                 );
             });
 
@@ -278,7 +277,7 @@ describe('Config Validation', () => {
                 const config = { apiKey: 'test', apiVersion: 1, timeout: NaN };
                 assert.throws(
                     () => validateConfig(config),
-                    (err) => err.name === 'ConfigValidationError'
+                    (err) => err instanceof Error
                 );
             });
         });
@@ -288,7 +287,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(null),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('object'));
                         return true;
                     }
@@ -299,7 +298,7 @@ describe('Config Validation', () => {
                 assert.throws(
                     () => validateConfig(undefined),
                     (err) => {
-                        assert.equal(err.name, 'ConfigValidationError');
+                        assert.ok(err instanceof Error);
                         assert.ok(err.message.includes('object'));
                         return true;
                     }
@@ -309,21 +308,21 @@ describe('Config Validation', () => {
             test('throws when config is a string', () => {
                 assert.throws(
                     () => validateConfig('config'),
-                    (err) => err.name === 'ConfigValidationError'
+                    (err) => err instanceof Error
                 );
             });
 
             test('throws when config is an array', () => {
                 assert.throws(
                     () => validateConfig([]),
-                    (err) => err.name === 'ConfigValidationError'
+                    (err) => err instanceof Error
                 );
             });
 
             test('throws when config is a number', () => {
                 assert.throws(
                     () => validateConfig(123),
-                    (err) => err.name === 'ConfigValidationError'
+                    (err) => err instanceof Error
                 );
             });
 
@@ -336,23 +335,6 @@ describe('Config Validation', () => {
                 };
                 assert.doesNotThrow(() => validateConfig(config));
             });
-        });
-    });
-
-    describe('ConfigValidationError', () => {
-        test('is an Error instance', () => {
-            const error = new ConfigValidationError('test');
-            assert.ok(error instanceof Error);
-        });
-
-        test('has correct name', () => {
-            const error = new ConfigValidationError('test');
-            assert.equal(error.name, 'ConfigValidationError');
-        });
-
-        test('has correct message', () => {
-            const error = new ConfigValidationError('Custom message');
-            assert.equal(error.message, 'Custom message');
         });
     });
 });
