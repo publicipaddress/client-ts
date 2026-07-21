@@ -23,22 +23,19 @@ const config: PublicIPAddressInfoConfig = {
 
 const { geolocation, network, weather } = new PublicIPAddressInfo(config);
 
-async function run() {
-  try {
-    const geoData = await geolocation.getByIp("8.8.8.8");
-    console.log("Country:", geoData.country);
+try {
+  const geoData = await geolocation.getByIp("8.8.8.8");
+  console.log("Country:", geoData.country);
 
-    const asnData = await network.getByIp("8.8.8.8");
-    console.log("ASN:", asnData.number);
+  const asnData = await network.getByIp("8.8.8.8");
+  console.log("ASN:", asnData.number);
 
-    const weatherData = await weather.getByIp("8.8.8.8");
-    console.log("Weather data:", weatherData.weather);
-  } catch (error) {
-    console.error("Error fetching IP info:", error);
-  }
+  const weatherData = await weather.getByIp("8.8.8.8");
+  console.log("Weather data:", weatherData.weather);
+} catch (error) {
+  console.error("Error fetching IP info:", error);
 }
 
-run();
 ```
 
 ## Supported Data Properties
