@@ -1,5 +1,5 @@
 import type { PublicIP } from "../core/common";
-import type { HttpClientLike } from "../core/http";
+import type { HttpClientInterface } from "../core/http";
 import { BaseService } from "../core/common";
 import type {
     GeolocationLocationResponse,
@@ -8,7 +8,7 @@ import type {
 } from "./types";
 
 export class GeolocationService extends BaseService<GeolocationLocationResponse> {
-    constructor(httpClient: HttpClientLike) {
+    constructor(httpClient: HttpClientInterface) {
         super(httpClient);
     }
 

@@ -1,8 +1,8 @@
 import type { PublicIP } from "./types/Common";
-import type { HttpClientLike } from "../http/HttpClient";
+import type { HttpClientInterface } from "../http/types";
 
 export abstract class BaseService<TResponse> {
-    protected constructor(protected readonly httpClient: HttpClientLike) { }
+    protected constructor(protected readonly httpClient: HttpClientInterface) { }
 
     protected abstract getByIp(ip: PublicIP): Promise<TResponse>;
 }

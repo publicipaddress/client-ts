@@ -1,10 +1,10 @@
 import type { PublicIP } from "../core/common";
-import type { HttpClientLike } from "../core/http";
+import type { HttpClientInterface } from "../core/http";
 import { BaseService } from "../core/common";
 import type { WeatherCurrentResponse } from "./types";
 
 export class WeatherService extends BaseService<WeatherCurrentResponse> {
-    constructor(httpClient: HttpClientLike) {
+    constructor(httpClient: HttpClientInterface) {
         super(httpClient);
     }
 

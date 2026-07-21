@@ -1,2 +1,2 @@
 export { HttpClient } from "./HttpClient";
-export type { HttpClientLike } from "./HttpClient";
+export type { HttpClientInterface } from "./types";

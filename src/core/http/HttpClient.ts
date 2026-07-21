@@ -1,12 +1,8 @@
 import type { PublicIPAddressInfoConfig } from "../client";
+import type { HttpClientInterface } from "./types/HttpClient";
 import { validateConfig } from "../validation";
 
-export interface HttpClientLike {
-    request<T>(endpoint: string): Promise<T>;
-    buildQuery(endpoint: string, params: Record<string, string | number | undefined>): string;
-}
-
-export class HttpClient implements HttpClientLike {
+export class HttpClient implements HttpClientInterface {
     private readonly apiKey: string;
     private readonly apiVersion: number;
     private readonly timeout: number;

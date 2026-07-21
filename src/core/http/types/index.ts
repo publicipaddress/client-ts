@@ -1,1 +1,1 @@
-export type { HttpClientLike } from "./HttpClient";
+export type { HttpClientInterface } from "./HttpClient";
