@@ -27,8 +27,23 @@ try {
   const geoData = await geolocation.getByIp("8.8.8.8");
   console.log("Country:", geoData.country);
 
-  const asnData = await network.getByIp("8.8.8.8");
-  console.log("ASN:", asnData.number);
+  // Autonomous system lookup (new nested API)
+  const asnData = await network.autonomousSystem.getByIp("8.8.8.8");
+  console.log("ASN:", asnData);
+
+  // Alternatively use the bracket alias for the kebab-case name:
+  // await network['autonomous-system'].getByIp("8.8.8.8");
+
+  // Network 'me' endpoint (no IP required)
+  const me = await network.me.get();
+  console.log("My IP:", me.ip);
+
+  // Security endpoints (nested under network.security)
+  const reports = await network.security.reports.getByIp("8.8.8.8");
+  console.log("Security reports:", reports);
+
+  const risk = await network.security.risk.getByIp("8.8.8.8");
+  console.log("Risk:", risk);
 
   const weatherData = await weather.getByIp("8.8.8.8");
   console.log("Weather data:", weatherData.weather);
@@ -51,10 +66,13 @@ Returns a merged geolocation object built from the `/geolocation` endpoints. It 
 - `timezone` (string): Timezone name.
 - `zip_code` (string): Postal code when available from the lookup endpoints.
 
-### `network.getByIp(ip)`
-Returns the `/ips/{ip}/autonomous-system` response containing:
+### `network.autonomous-system.getByIp(ip)`
+Returns the `/network/autonomous-systems` response (first item) containing:
 - `number` (string | null): The autonomous system number.
 - `organization` (string | null): The network organization name.
+
+### `network.me.get()`
+Returns the `/network/me` response containing the detected `ip` and `version`.
 
 ### `weather.getByIp(ip)`
 Returns an object from `/weather/current` containing:
