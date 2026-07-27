@@ -1,4 +1,5 @@
 export { NetworkService } from "./NetworkService";
+export { validateNetworkRequest } from "./validation";
 export type { NetworkRequest } from "./types";
 export type {
     NetworkMeResponse,

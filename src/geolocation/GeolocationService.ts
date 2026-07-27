@@ -1,6 +1,7 @@
 import type { PublicIP } from "../core/common";
 import type { HttpClientInterface } from "../core/http";
 import { BaseService } from "../core/common";
+import { validateGeolocationRequest } from "./validation";
 import type {
     GeolocationLocationResponse,
     GeolocationCountryResponse,
@@ -13,6 +14,8 @@ export class GeolocationService extends BaseService<GeolocationLocationResponse>
     }
 
     public async getByIp(ip: PublicIP): Promise<GeolocationLocationResponse> {
+        validateGeolocationRequest(ip);
+
         const [countriesResponse, citiesResponse] = await Promise.all([
             this.httpClient.request<GeolocationCountryResponse[]>(
                 this.httpClient.buildQuery("/geolocation/countries", { ip, limit: 1 }),

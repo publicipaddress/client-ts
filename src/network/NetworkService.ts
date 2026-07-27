@@ -1,6 +1,7 @@
 import type { PublicIP } from "../core/common";
 import type { HttpClientInterface } from "../core/http";
 import { BaseService } from "../core/common";
+import { validateNetworkRequest } from "./validation";
 import type {
     NetworkMeResponse,
     NetworkAutonomousSystemResponse,
@@ -14,6 +15,8 @@ class AutonomousSystemService extends BaseService<NetworkAutonomousSystemRespons
     }
 
     public async getByIp(ip: PublicIP): Promise<NetworkAutonomousSystemResponse> {
+        validateNetworkRequest(ip);
+
         const response = await this.httpClient.request<NetworkAutonomousSystemResponse[] | NetworkAutonomousSystemResponse>(
             this.httpClient.buildQuery("/network/autonomous-systems", { ip, limit: 1 }),
         );
@@ -33,6 +36,8 @@ class SecurityReportsService extends BaseService<NetworkSecurityReportsResponse>
     }
 
     public async getByIp(ip: PublicIP): Promise<NetworkSecurityReportsResponse> {
+        validateNetworkRequest(ip);
+
         return await this.httpClient.request<NetworkSecurityReportsResponse>(
             this.httpClient.buildQuery("/network/security/reports", { ip }),
         );
@@ -45,6 +50,8 @@ class SecurityRiskService extends BaseService<NetworkSecurityReportResponse> {
     }
 
     public async getByIp(ip: PublicIP): Promise<NetworkSecurityReportResponse> {
+        validateNetworkRequest(ip);
+
         const encoded = encodeURIComponent(String(ip));
         return await this.httpClient.request<NetworkSecurityReportResponse>(`/network/security/risk/${encoded}`);
     }
@@ -91,6 +98,8 @@ export class NetworkService {
 
     // Backwards-compatible top-level method delegating to autonomous system lookup
     public async getByIp(ip: PublicIP): Promise<NetworkAutonomousSystemResponse> {
+        validateNetworkRequest(ip);
+
         return await this.autonomousSystem.getByIp(ip);
     }
 }

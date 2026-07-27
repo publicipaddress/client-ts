@@ -1,6 +1,7 @@
 import type { PublicIP } from "../core/common";
 import type { HttpClientInterface } from "../core/http";
 import { BaseService } from "../core/common";
+import { validateWeatherRequest } from "./validation";
 import type { WeatherCurrentResponse } from "./types";
 
 export class WeatherService extends BaseService<WeatherCurrentResponse> {
@@ -9,6 +10,8 @@ export class WeatherService extends BaseService<WeatherCurrentResponse> {
     }
 
     public async getByIp(ip: PublicIP): Promise<WeatherCurrentResponse> {
+        validateWeatherRequest(ip);
+
         const response = await this.httpClient.request<WeatherCurrentResponse>(
             this.httpClient.buildQuery("/weather/current", { ip }),
         );

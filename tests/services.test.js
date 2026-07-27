@@ -106,6 +106,13 @@ describe('service modules', () => {
         });
     });
 
+    test('GeolocationService rejects private IP addresses', async () => {
+        const httpClient = createStubHttpClient();
+        const service = new GeolocationService(httpClient);
+
+        await assert.rejects(service.getByIp('10.0.0.1'), /public IP address/);
+    });
+
     test('NetworkService returns the ASN response shape', async () => {
         const httpClient = createStubHttpClient({
             response: { number: 13335, organization: 'Cloudflare, Inc.' },
@@ -118,6 +125,13 @@ describe('service modules', () => {
             number: 13335,
             organization: 'Cloudflare, Inc.',
         });
+    });
+
+    test('NetworkService rejects private IP addresses', async () => {
+        const httpClient = createStubHttpClient();
+        const service = new NetworkService(httpClient);
+
+        await assert.rejects(service.getByIp('192.168.0.1'), /public IP address/);
     });
 
     test('WeatherService returns the weather response shape', async () => {
@@ -135,5 +149,12 @@ describe('service modules', () => {
             longitude: -122.42,
             weather: { summary: 'clear' },
         });
+    });
+
+    test('WeatherService rejects private IP addresses', async () => {
+        const httpClient = createStubHttpClient();
+        const service = new WeatherService(httpClient);
+
+        await assert.rejects(service.getByIp('127.0.0.1'), /public IP address/);
     });
 });

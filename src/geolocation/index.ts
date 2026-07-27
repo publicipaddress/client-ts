@@ -1,4 +1,5 @@
 export { GeolocationService } from "./GeolocationService";
+export { validateGeolocationRequest } from "./validation";
 export type {
     GeolocationRequest,
     GeolocationRegionRequest,
