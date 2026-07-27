@@ -7,7 +7,7 @@ export abstract class BaseService<TResponse> {
     protected abstract getByIp(ip: PublicIP): Promise<TResponse>;
 
     // optional
-    protected  get(): Promise<TResponse> {
+    protected get(): Promise<TResponse> {
         throw new Error("Method not implemented.");
     }
 }
