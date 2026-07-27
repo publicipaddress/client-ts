@@ -1,1 +1,0 @@
-export type { WeatherRequest } from "./weather";

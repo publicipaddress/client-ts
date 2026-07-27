@@ -1,4 +1,4 @@
-import type { PublicIP } from "../../../core/common";
+import type { PublicIP } from "../../core/common";
 
 export interface GeolocationRequest {
     ip: PublicIP;
